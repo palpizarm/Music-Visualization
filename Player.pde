@@ -25,35 +25,46 @@ void setup() {
 }
 
 void draw() {
-  background(10);
-  buttonPause.updateMouseIn();
   buttonMusic.updateMouseIn();
-  // progress line
-  stroke( 100, 100 ,100);
-  fill(255);
-  line( 200, height - 100, width-200, height - 100);
+  if (song != null && song.isPlaying()) {
+    background(10);
+    buttonPause.updateMouseIn();
+    buttonMusic.updateMouseIn();
 
-  if (song != null) {
+  
      fft.forward(song.mix);
      beat.detect(song.mix);
      noStroke();
-     
      // render the visualization
      animation.update();
+
+    // time line
+    stroke( 100, 100 ,100);
+    line( 200, height - 100, width-200, height - 100);
+    // map: Re-maps a number from one range to another.
+    float position = map(song.position(),0,song.length(),0,width-400);
+    stroke( 255, 255 ,255);
+    line(200, height - 100, 200 + position, height - 100);
+    // time
+    textSize(18);
+    fill(255);
+    text(
+     TimeToString(song.length()),
+     width-150, height - 100    
+    );
      
-     // time
-     textSize(18);
-     fill(255);
-     text(
-      TimeToString(song.length()),
-      width-100, height - 100    
-     );
+    textSize(18);
+    fill(255);
+    text(
+     TimeToString(song.position()),
+     100, height - 100    
+    );
   }
 }
 
 
 void mousePressed() {
-  if (song != null) {
+  if (song != null  && buttonPause.MouseInside()) {
     if (buttonPause.MouseInside() && song.isPlaying()) {
       buttonPause.setImage(loadImage("play.png"),loadImage("play.png"));
       song.pause();
