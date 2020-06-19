@@ -14,3 +14,10 @@ import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.event.ItemListener;
 import java.awt.event.ActionListener;
+
+
+String TimeToString(int milisecond) {
+  String second = nf(milisecond/1000%60,2);
+  String minutes = nf(milisecond/1000/60,2);
+  return (minutes + ":" + second);
+}

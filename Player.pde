@@ -21,7 +21,7 @@ void setup() {
   
   // create a buttons
   buttonPause = new Button(loadImage("pause.png"), loadImage("pause.png"), new PVector(50,height-100),40);
-  buttonMusic = new Button(loadImage("music.png"),loadImage("music.png"),new PVector(50,50),40); //<>//
+  buttonMusic = new Button(loadImage("music.png"),loadImage("music.png"),new PVector(50,50),40); //<>// //<>//
 }
 
 void draw() {
@@ -41,6 +41,13 @@ void draw() {
      // render the visualization
      animation.update();
      
+     // time
+     textSize(18);
+     fill(255);
+     text(
+      TimeToString(song.length()),
+      width-100, height - 100    
+     );
   }
 }
 
@@ -103,12 +110,10 @@ void selectSong(File selection) {
     beat = new BeatDetect(song.bufferSize(),song.sampleRate());
     beat.setSensitivity(100);
     
-    animation = new Visualization(50,50);
-    //circles[1] = new Circle(50,50*-1);
-    //circles[2] = new Circle(50*-1,50);    
-    song.play();
-    loop();
+    animation = new Visualization(50,50);    
   }
+  song.play();
+  loop();
 }
 
 
