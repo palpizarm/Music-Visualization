@@ -36,23 +36,23 @@ Visualization (float pTransPos1, float pTransPos2) {
     
     // sphere 
     pushMatrix();
-    translate(width/2, height/3,0);
-    for (int index = 0; index < fft.specSize(); index++) {
-      this.angle1[index] = this.angle1[index] + fft.getFreq(index)/2000;
-      rotateX(sin(this.angle1[index]/5)/transPos1);
-      rotateY(cos(this.angle1[index]/5)/transPos2);
-      fill(20,255-fft.getFreq(index)*2,255-fft.getBand(index)*2);
+    translate(width/2, height/3);
+    for (int i = 0; i < fft.specSize(); i++) {
+      this.angle1[i] = this.angle1[i] + fft.getFreq(i)/2000;
+      rotateX(sin(this.angle1[i]/5)/transPos1);
+      rotateY(cos(this.angle1[i]/5)/transPos2);
+      fill(fft.getFreq(i)*5, 55, fft.getBand(i)*5);
       pushMatrix();
-      translate((this.x[index]+this.transPos1),(this.y[index] + this.transPos2));
-      box(fft.getFreq(index)/this.transPos1 + fft.getFreq(index)/transPos2);
+      translate((this.x[i]+this.transPos1),(this.y[i] + this.transPos2));
+      box(fft.getFreq(i)/this.transPos1 + fft.getFreq(i)/transPos2);
       popMatrix();
       pushMatrix();
-      translate((this.x[index]+this.transPos1),(this.y[index] - this.transPos2));
-      box(fft.getFreq(index)/50 + fft.getFreq(index)/50);
+      translate((this.x[i]+this.transPos1),(this.y[i] - this.transPos2));
+      box(fft.getFreq(i)/50 + fft.getFreq(i)/50);
       popMatrix();
       pushMatrix();
-      translate((this.x[index]-this.transPos1),(this.y[index] + this.transPos2));
-      box(fft.getFreq(index)/50 + fft.getFreq(index)/50);
+      translate((this.x[i]-this.transPos1),(this.y[i] + this.transPos2));
+      box(fft.getFreq(i)/50 + fft.getFreq(i)/50);
       popMatrix();
       
     }

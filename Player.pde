@@ -21,32 +21,50 @@ void setup() {
   
   // create a buttons
   buttonPause = new Button(loadImage("pause.png"), loadImage("pause.png"), new PVector(50,height-100),40);
-  buttonMusic = new Button(loadImage("music.png"),loadImage("music.png"),new PVector(50,50),40); //<>//
+  buttonMusic = new Button(loadImage("music.png"),loadImage("music.png"),new PVector(50,50),40); //<>// //<>//
 }
 
 void draw() {
-  background(10);
-  buttonPause.updateMouseIn();
   buttonMusic.updateMouseIn();
-  // progress line
-  stroke( 100, 100 ,100);
-  fill(255);
-  line( 200, height - 100, width-200, height - 100);
+  if (song != null && song.isPlaying()) {
+    background(10);
+    buttonPause.updateMouseIn();
+    buttonMusic.updateMouseIn();
 
-  if (song != null) {
+  
      fft.forward(song.mix);
      beat.detect(song.mix);
      noStroke();
-     
      // render the visualization
      animation.update();
+
+    // time line
+    stroke( 100, 100 ,100);
+    line( 200, height - 100, width-200, height - 100);
+    // map: Re-maps a number from one range to another.
+    float position = map(song.position(),0,song.length(),0,width-400);
+    stroke( 255, 255 ,255);
+    line(200, height - 100, 200 + position, height - 100);
+    // time
+    textSize(18);
+    fill(255);
+    text(
+     TimeToString(song.length()),
+     width-150, height - 100    
+    );
      
+    textSize(18);
+    fill(255);
+    text(
+     TimeToString(song.position()),
+     100, height - 100    
+    );
   }
 }
 
 
 void mousePressed() {
-  if (song != null) {
+  if (song != null  && buttonPause.MouseInside()) {
     if (buttonPause.MouseInside() && song.isPlaying()) {
       buttonPause.setImage(loadImage("play.png"),loadImage("play.png"));
       song.pause();
@@ -103,12 +121,10 @@ void selectSong(File selection) {
     beat = new BeatDetect(song.bufferSize(),song.sampleRate());
     beat.setSensitivity(100);
     
-    animation = new Visualization(50,50);
-    //circles[1] = new Circle(50,50*-1);
-    //circles[2] = new Circle(50*-1,50);    
-    song.play();
-    loop();
+    animation = new Visualization(50,50);    
   }
+  song.play();
+  loop();
 }
 
 

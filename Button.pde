@@ -29,6 +29,10 @@ class Button {
    }
    
    void updateMouseIn() {
+     fill(10);
+     rectMode(CENTER);
+     noStroke();
+     rect(this.position.x,this.position.y,this.radious + 10,this.radious + 10);
      if (dist(this.position.x,this.position.y, mouseX, mouseY) < radious) {
        image(this.imageIn, this.position.x, this.position.y);
      } else { 
