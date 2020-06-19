@@ -1,5 +1,3 @@
-
-
 Minim minim;
 AudioPlayer song;
 AudioMetaData data;
@@ -11,7 +9,7 @@ float bgColor = 10;
 MenuBar menu;
 Menu songItem;
 MenuItem loadSong;
-Circle[] circles;
+Visualization animation;
 
 
 void setup() {
@@ -20,9 +18,6 @@ void setup() {
   surface.setResizable(false);
   background(bgColor);
   minim = new Minim(this);
-  
-  // create a circles
-  circles = new Circle[3];
   
   // create a buttons
   buttonPause = new Button(loadImage("pause.png"), loadImage("pause.png"), new PVector(50,height-100),40);
@@ -43,9 +38,8 @@ void draw() {
      beat.detect(song.mix);
      noStroke();
      
-     for (int index = 0; index < circles.length; index++) {
-       circles[index].update();
-     }
+     // render the visualization
+     animation.update();
      
   }
 }
@@ -109,9 +103,9 @@ void selectSong(File selection) {
     beat = new BeatDetect(song.bufferSize(),song.sampleRate());
     beat.setSensitivity(100);
     
-    circles[0] = new Circle(150,150);
-    circles[1] = new Circle(0,0*-1);
-    circles[2] = new Circle(0*-1,0);    
+    animation = new Visualization(50,50);
+    //circles[1] = new Circle(50,50*-1);
+    //circles[2] = new Circle(50*-1,50);    
     song.play();
     loop();
   }
