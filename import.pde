@@ -5,6 +5,7 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 import processing.awt.PSurfaceAWT;
+import processing.opengl.PSurfaceJOGL;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.event.MenuListener;
