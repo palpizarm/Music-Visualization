@@ -17,7 +17,7 @@ Visualization (float pTransPos1, float pTransPos2) {
     
      // big circle
     pushMatrix();
-    translate(width/2, height/2);
+    translate(width/2, height-300);
     for (int i = 0; i < fft.specSize(); i++) {
       this.x[i] = fft.getFreq(i)/500;
       this.y[i] = this.y[i]+fft.getBand(i)/1000;
@@ -27,8 +27,8 @@ Visualization (float pTransPos1, float pTransPos2) {
       fill(fft.getFreq(i)*5, 55, fft.getBand(i)*5);
       pushMatrix();
       translate(this.x[i]+300,this.y[i]+50);
-      rect(-fft.getBand(i)/50, -fft.getBand(i)/20,fft.getBand(i)/15,fft.getBand(i)/15);
-      rect(-fft.getFreq(i)/5, -fft.getFreq(i)/5,fft.getFreq(i)/100,fft.getFreq(i)/20);
+      rect(-fft.getBand(i)/5, -fft.getBand(i)/5,fft.getBand(i)/5,fft.getBand(i)/5);
+      rect(-fft.getFreq(i)/2, -fft.getFreq(i)/2,fft.getFreq(i)/50,fft.getFreq(i)/10);
       popMatrix();  
     }
     popMatrix();
