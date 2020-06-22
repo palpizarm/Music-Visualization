@@ -9,7 +9,8 @@ float bgColor = 10;
 MenuBar menu;
 Menu songItem;
 MenuItem loadSong;
-Visualization animation;
+Visualization[] animation;
+int VisualizationCount = 2;
 
 
 void setup() {
@@ -18,6 +19,8 @@ void setup() {
   surface.setResizable(false);
   background(bgColor);
   minim = new Minim(this);
+  
+  animation = new Visualization[VisualizationCount];
   
   // create a buttons
   buttonPause = new Button(loadImage("pause.png"), loadImage("pause.png"), new PVector(50,height-100),40);
@@ -36,7 +39,9 @@ void draw() {
      beat.detect(song.mix);
      noStroke();
      // render the visualization
-     animation.update();
+     for (int i = 0; i < VisualizationCount; i++) {
+       animation[i].update();
+     }
 
     // time line
     stroke( 100, 100 ,100);
@@ -121,8 +126,9 @@ void selectSong(File selection) {
     beat = new BeatDetect(song.bufferSize(),song.sampleRate());
     beat.setSensitivity(100);
     
-    animation = new Visualization(50,50);    
-  }
+    animation[0] = new Visualization(50,50,0);
+    animation[1] = new Visualization(50,50,-1500);
+   }
   song.play();
   loop();
 }
