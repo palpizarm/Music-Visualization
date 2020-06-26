@@ -24,7 +24,7 @@ void setup() {
   
   // create a buttons
   buttonPause = new Button(loadImage("pause.png"), loadImage("pause.png"), new PVector(50,height-100),40);
-  buttonMusic = new Button(loadImage("music.png"),loadImage("music.png"),new PVector(50,50),40); //<>// //<>//
+  buttonMusic = new Button(loadImage("music.png"),loadImage("music.png"),new PVector(50,50),40);
 }
 
 void draw() {
@@ -86,7 +86,8 @@ void mousePressed() {
       }
     }
     noLoop();
-    selectInput("Select a song", "selectSong"); 
+    print("Probablemente al inicio la ventana para seleccionar la cancion va a iniciar minimizada");
+    selectInput("Select a song", "selectSong"); //<>//
     buttonMusic.updateMouseIn();
   }
 }
@@ -94,7 +95,7 @@ void mousePressed() {
 
 void keyPressed() {
   if (keyCode == 32) {
-    if (song != null && buttonPause.MouseInside()) {
+    if (song != null) {
       if (song.isPlaying()) {
         buttonPause.setImage(loadImage("play.png"),loadImage("play.png"));
         song.pause();
@@ -120,16 +121,23 @@ void keyPressed() {
 
 void selectSong(File selection) {
   if (selection != null) {
-    song = minim.loadFile(selection.getAbsolutePath());
-    data = song.getMetaData();
-    fft = new FFT(song.bufferSize(),song.sampleRate());
-    beat = new BeatDetect(song.bufferSize(),song.sampleRate());
-    beat.setSensitivity(100);
-    
-    animation[0] = new Visualization(50,50,0);
-    animation[1] = new Visualization(50,50,-1500);
+    try {
+      song = minim.loadFile(selection.getAbsolutePath());
+      data = song.getMetaData();
+      fft = new FFT(song.bufferSize(),song.sampleRate());
+      beat = new BeatDetect(song.bufferSize(),song.sampleRate());
+      beat.setSensitivity(100);
+      animation[0] = new Visualization(50,50,0);
+      animation[1] = new Visualization(50,50,-1000);
+      song.play();
+    } catch(Exception e) {
+      JOptionPane.showMessageDialog(null, "Error al cargar la canción", "Error", JOptionPane.ERROR_MESSAGE);
+      noLoop();
+      selectInput("Select a song", "selectSong");
+    }
+   } else if (song != null){
+     song.play();
    }
-  song.play();
   loop();
 }
 

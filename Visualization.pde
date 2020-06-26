@@ -15,11 +15,11 @@ Visualization (float pTransPos1, float pTransPos2, float pZTransPos) {
   }
   
   void update() {
-    /*
-    // beat meter
+    
+   /* // beat meter
     colorMode(HSB, 360, 100, 100);
     pushMatrix();
-    translate(width*.50, height*.30, 0);
+    translate(width*.50, height*.30, -2000);
     int r = 225;
     float r2;
     for (int i = 0; i < 360; ++i) {
